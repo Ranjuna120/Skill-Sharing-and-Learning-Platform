@@ -1,0 +1,132 @@
+/* PlanForm.css */
+.plan-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    padding: 20px;
+  }
+  
+  .plan-form-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .plan-form-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #007c67;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .plan-form-subtitle {
+    font-size: 1.5rem;
+    color: #033807;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+  
+  .plan-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .form-input,
+  .form-textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #4c00fd;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: #000000;
+    opacity: 0.8;
+  }
+  
+  .form-input:focus,
+  .form-textarea:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .submit-btn {
+    padding: 12px;
+    background: linear-gradient(90deg, #ff6f61, #ff8e53);
+    color: #ff0000;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 480px) {
+    .plan-form-card {
+      padding: 30px;
+      max-width: 90%;
+    }
+  
+    .plan-form-title {
+      font-size: 1.8rem;
+    }
+  
+    .plan-form-subtitle {
+      font-size: 0.9rem;
+    }
+  
+    .submit-btn {
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }

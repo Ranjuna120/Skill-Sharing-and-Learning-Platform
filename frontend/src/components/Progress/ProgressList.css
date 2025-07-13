@@ -1,0 +1,270 @@
+@import '../common/shared.css';
+
+.progress-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  }
+  
+  .progress-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .progress-list-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .create-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .create-button:hover {
+    background-color: #45a049;
+  }
+  
+  .create-icon {
+    font-size: 1.2rem;
+  }
+  
+  .progress-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .progress-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .progress-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .progress-user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .default-profile-icon {
+    width: 40px;
+    height: 40px;
+    color: #666;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .progress-actions-owner {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-btn {
+    color: #2196F3;
+  }
+  
+  .edit-btn:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+  }
+  
+  .delete-btn {
+    color: #f44336;
+  }
+  
+  .delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+  }
+  
+  .progress-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 15px 0;
+  }
+  
+  .progress-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .progress-detail {
+    margin: 0;
+    color: #666;
+  }
+  
+  .progress-detail strong {
+    color: #333;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .edit-input, .edit-textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .edit-textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .edit-input:focus, .edit-textarea:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  }
+  
+  .edit-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .save-btn, .cancel-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .save-btn {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background-color: #1976D2;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .progress-list-error {
+    color: #f44336;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(244, 67, 54, 0.1);
+    border-radius: 4px;
+  }
+  
+  .no-progress {
+    text-align: center;
+    color: #666;
+    grid-column: 1 / -1;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .progress-list-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  
+    .progress-list-title {
+      font-size: 2rem;
+    }
+  
+    .progress-card {
+      padding: 1rem;
+    }
+  
+    .progress-text {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .progress-list-container {
+      padding: 20px 10px;
+    }
+  
+    .progress-list-title {
+      font-size: 1.75rem;
+    }
+  
+    .user-profile {
+      gap: 0.5rem;
+    }
+  
+    .profile-image,
+    .default-profile-icon {
+      width: 32px;
+      height: 32px;
+    }
+  
+    .progress-text {
+      font-size: 0.9rem;
+    }
+  
+    .progress-type,
+    .progress-date {
+      font-size: 0.8rem;
+    }
+  }

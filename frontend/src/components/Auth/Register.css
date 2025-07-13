@@ -1,0 +1,142 @@
+/* Register.css */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  padding: 20px;
+}
+
+.register-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.register-subtitle {
+  font-size: 1rem;
+  color: #000000;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+.register-form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #74ebd5;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #74ebd5;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #5cd1b9;
+  transform: translateY(-2px);
+}
+
+.error-message {
+  color: #ff4444;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.login-link {
+  margin-top: 20px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #74ebd5;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0;
+  margin-left: 5px;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 30px;
+    max-width: 90%;
+  }
+
+  .register-title {
+    font-size: 2rem;
+  }
+
+  .register-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    padding: 10px;
+  }
+} 

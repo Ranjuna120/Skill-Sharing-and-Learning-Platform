@@ -1,0 +1,46 @@
+/* Shared styles for list headers and create buttons */
+.plan-list-header,
+.progress-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.create-icon {
+  font-size: 1.1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .create-button span {
+    display: none;
+  }
+  
+  .create-button {
+    padding: 0.5rem;
+  }
+  
+  .create-icon {
+    margin: 0;
+  }
+} 
