@@ -35,7 +35,7 @@ const PlanForm = () => {
     }
 
     try {
-      await axios.post('http://localhost:8081/api/plans', 
+      await axios.post('http://localhost:8082/api/plans', 
         { ...formData },
         {
           params: { userId },
