@@ -57,7 +57,7 @@ const PlanList = () => {
 
   const handleEditPlan = async (planId) => {
     try {
-      const response = await axios.put(`http://localhost:8081/api/plans/${planId}`, editForm, {
+      const response = await axios.put(`http://localhost:8082/api/plans/${planId}`, editForm, {
         withCredentials: true
       });
       
