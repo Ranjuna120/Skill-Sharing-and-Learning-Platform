@@ -10,7 +10,7 @@ const Navigation = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:8081/api/users/logout', {}, {
+            await axios.post('http://localhost:8082/api/users/logout', {}, {
                 withCredentials: true
             });
             logout();
