@@ -81,7 +81,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 2. Create a new project or select existing
 3. Enable Google+ API
 4. Create OAuth 2.0 credentials
-5. Add `http://localhost:8081/login/oauth2/code/google` as redirect URI
+4. Add `http://localhost:8082/login/oauth2/code/google` as redirect URI
 6. Update your `.env` file with the credentials
 
 ### 5. Backend Setup
@@ -90,7 +90,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 mvn clean install
 mvn spring-boot:run
 ```
-Backend will start on: `http://localhost:8081`
+Backend will start on: `http://localhost:8082`
 
 ### 6. Frontend Setup
 ```bash
@@ -103,13 +103,13 @@ npm install
 # Start development server
 npm start
 ```
-Frontend will start on: `http://localhost:3000`
+Frontend will start on: `http://localhost:3001`
 
 ## 🏃‍♂️ Running the Application
 
 1. **Start Backend**: `mvn spring-boot:run`
 2. **Start Frontend**: `cd frontend && npm start`
-3. **Access Application**: Open `http://localhost:3000`
+3. **Access Application**: Open `http://localhost:3001`
 
 ## 📝 API Endpoints
 
@@ -164,8 +164,8 @@ spring.datasource.password=${DB_PASSWORD:password}
 
 ### CORS Configuration
 CORS is configured to allow requests from:
-- `http://localhost:3000` (React dev server)
-- `http://127.0.0.1:3000`
+- `http://localhost:3001` (React dev server)
+- `http://127.0.0.1:3001`
 
 ## 🐛 Troubleshooting
 
