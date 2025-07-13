@@ -15,7 +15,7 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/api/users/${id}`, {
+                const response = await axios.get(`http://localhost:8082/api/users/${id}`, {
                     withCredentials: true
                 });
                 setProfile(response.data);
@@ -25,7 +25,7 @@ const UserProfile = () => {
                     const userId = currentUser.sub || currentUser.id;
                     if (userId) {
                         const followResponse = await axios.get(
-                            `http://localhost:8081/api/users/${userId}/following/${id}`,
+                            `http://localhost:8082/api/users/${userId}/following/${id}`,
                             { withCredentials: true }
                         );
                         setIsFollowing(followResponse.data);
@@ -55,7 +55,7 @@ const UserProfile = () => {
 
             if (isFollowing) {
                 await axios.post(
-                    `http://localhost:8081/api/users/${id}/unfollow`,
+                    `http://localhost:8082/api/users/${id}/unfollow`,
                     null,
                     {
                         params: { followerId: userId },
@@ -64,7 +64,7 @@ const UserProfile = () => {
                 );
             } else {
                 await axios.post(
-                    `http://localhost:8081/api/users/${id}/follow`,
+                    `http://localhost:8082/api/users/${id}/follow`,
                     null,
                     {
                         params: { followerId: userId },
@@ -74,7 +74,7 @@ const UserProfile = () => {
             }
             
             // Refresh profile data
-            const response = await axios.get(`http://localhost:8081/api/users/${id}`, {
+            const response = await axios.get(`http://localhost:8082/api/users/${id}`, {
                 withCredentials: true
             });
             setProfile(response.data);
