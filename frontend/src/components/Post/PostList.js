@@ -23,7 +23,7 @@ const PostList = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/posts', {
+      const response = await axios.get('http://localhost:8082/api/posts', {
         withCredentials: true
       });
       setPosts(response.data);
@@ -56,7 +56,7 @@ const PostList = () => {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:8081/api/posts/${postId}`, {
+      const response = await axios.delete(`http://localhost:8082/api/posts/${postId}`, {
         params: { userId },
         withCredentials: true
       });
@@ -81,7 +81,7 @@ const PostList = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:8081/api/posts/${postId}`, 
+      const response = await axios.put(`http://localhost:8082/api/posts/${postId}`, 
         {
           title: editForm.title,
           description: editForm.description
@@ -150,7 +150,7 @@ const PostList = () => {
       }));
 
       // Make API call
-      await axios.post(`http://localhost:8081/api/posts/${postId}/like`, null, {
+      await axios.post(`http://localhost:8082/api/posts/${postId}/like`, null, {
         params: { userId },
         withCredentials: true
       });
@@ -187,7 +187,7 @@ const PostList = () => {
 
     // Try to update backend
     try {
-      await axios.post(`http://localhost:8081/api/posts/${postId}/favorite`, null, {
+      await axios.post(`http://localhost:8082/api/posts/${postId}/favorite`, null, {
         params: { userId: user.sub },
         withCredentials: true
       });
@@ -229,7 +229,7 @@ const PostList = () => {
       }
 
       const response = await axios.post(
-        `http://localhost:8081/api/posts/${postId}/comments`,
+        `http://localhost:8082/api/posts/${postId}/comments`,
         { content },
         {
           params: { userId: user.id },
