@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setEmail(registerDTO.getEmail());
-        user.setName(registerDTO.getEmail().split("@")[0]); // Use email username as default name
+        user.setName(registerDTO.getName() != null ? registerDTO.getName() : registerDTO.getEmail().split("@")[0]); // Use provided name or email username as default
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setSource(RegistrationSource.CREDENTIAL);
         
