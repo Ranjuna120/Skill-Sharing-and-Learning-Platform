@@ -91,7 +91,7 @@ const NotificationsPage = () => {
         if (!user?.id) return;
         
         // Fetch user's posts for comments and likes
-        const postsResponse = await axios.get(`http://localhost:8081/api/posts/user/${user.id}`, {
+        const postsResponse = await axios.get(`http://localhost:8082/api/posts/user/${user.id}`, {
           withCredentials: true
         });
 
