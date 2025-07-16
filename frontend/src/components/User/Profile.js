@@ -24,7 +24,7 @@ const Profile = () => {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:8082/api/users/${targetUserId}`, {
+                const response = await axios.get(`http://localhost:8081/api/users/${targetUserId}`, {
                     withCredentials: true
                 });
                 setProfile(response.data);
@@ -34,7 +34,7 @@ const Profile = () => {
                     const currentUserId = currentUser.id || currentUser.sub;
                     if (currentUserId) {
                         const followResponse = await axios.get(
-                            `http://localhost:8082/api/users/${currentUserId}/following/${targetUserId}`,
+                            `http://localhost:8081/api/users/${currentUserId}/following/${targetUserId}`,
                             { withCredentials: true }
                         );
                         setIsFollowing(followResponse.data);
@@ -70,7 +70,7 @@ const Profile = () => {
 
             if (isFollowing) {
                 await axios.post(
-                    `http://localhost:8082/api/users/${targetUserId}/unfollow`,
+                    `http://localhost:8081/api/users/${targetUserId}/unfollow`,
                     null,
                     {
                         params: { followerId: currentUserId },
@@ -79,7 +79,7 @@ const Profile = () => {
                 );
             } else {
                 await axios.post(
-                    `http://localhost:8082/api/users/${targetUserId}/follow`,
+                    `http://localhost:8081/api/users/${targetUserId}/follow`,
                     null,
                     {
                         params: { followerId: currentUserId },
@@ -89,7 +89,7 @@ const Profile = () => {
             }
             
             // Refresh profile data
-            const response = await axios.get(`http://localhost:8082/api/users/${targetUserId}`, {
+            const response = await axios.get(`http://localhost:8081/api/users/${targetUserId}`, {
                 withCredentials: true
             });
             setProfile(response.data);
