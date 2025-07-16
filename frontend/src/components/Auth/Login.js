@@ -14,7 +14,7 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     // Redirect to Spring Boot's Google OAuth2 endpoint
-    window.location.href = 'http://localhost:8082/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8081/oauth2/authorization/google';
   };
 
   const handleSubmit = async (e) => {
@@ -23,7 +23,7 @@ const Login = () => {
     
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await axios.post(`http://localhost:8082${endpoint}`, formData, {
+      const response = await axios.post(`http://localhost:8081${endpoint}`, formData, {
         withCredentials: true
       });
       
