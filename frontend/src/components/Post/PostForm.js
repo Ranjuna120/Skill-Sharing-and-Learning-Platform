@@ -67,7 +67,7 @@ const PostForm = () => {
         hasVideo: !!formData.video
       });
 
-      const response = await axios.post('http://localhost:8082/api/posts', formDataToSend, {
+      const response = await axios.post('http://localhost:8081/api/posts', formDataToSend, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
