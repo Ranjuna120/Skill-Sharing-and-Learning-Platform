@@ -20,11 +20,11 @@ export const AuthProvider = ({ children }) => {
         
         if (code) {
           // We're in the OAuth callback, redirect to the backend
-          window.location.href = `http://localhost:8082/login/oauth2/code/google?${window.location.search}`;
+          window.location.href = `http://localhost:8081/login/oauth2/code/google?${window.location.search}`;
           return;
         }
 
-        const response = await axios.get('http://localhost:8082/api/user', {
+        const response = await axios.get('http://localhost:8081/api/user', {
           withCredentials: true
         });
         if (response.data) {
@@ -42,12 +42,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const loginWithGoogle = () => {
-    window.location.href = 'http://localhost:8082/oauth2/authorization/google';
+    window.location.href = 'http://localhost:8081/oauth2/authorization/google';
   };
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:8082/api/auth/logout', {}, {
+      await axios.post('http://localhost:8081/api/auth/logout', {}, {
         withCredentials: true
       });
       setUser(null);
