@@ -36,7 +36,7 @@ const ProgressForm = () => {
     }
 
     try {
-      await axios.post('http://localhost:8082/api/progress', 
+      await axios.post('http://localhost:8081/api/progress', 
         { ...formData },
         {
           params: { userId },
