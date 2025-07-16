@@ -21,7 +21,7 @@ const UserPosts = ({ userId }) => {
     const fetchUserPosts = async () => {
       try {
         console.log('Fetching posts for user:', userId);
-        const response = await axios.get(`http://localhost:8082/api/posts/user/${userId}`, {
+        const response = await axios.get(`http://localhost:8081/api/posts/user/${userId}`, {
           withCredentials: true
         });
         console.log('Fetched posts:', response.data);
