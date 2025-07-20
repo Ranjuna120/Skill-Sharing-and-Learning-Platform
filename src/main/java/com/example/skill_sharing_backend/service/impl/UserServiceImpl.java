@@ -6,7 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +21,9 @@ import com.example.skill_sharing_backend.model.RegistrationSource;
 import com.example.skill_sharing_backend.model.User;
 import com.example.skill_sharing_backend.repository.UserRepository;
 import com.example.skill_sharing_backend.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("unused")
 @Service
@@ -108,7 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> login(EmailLoginDTO loginDTO) {
+    public ResponseEntity<?> login(EmailLoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
         User user = userRepository.findByEmail(loginDTO.getEmail());
         if (user == null || user.getSource() != RegistrationSource.CREDENTIAL) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
@@ -121,6 +129,19 @@ public class UserServiceImpl implements UserService {
         // Initialize counts if not already set
         user.setFollowersCount(user.getFollowersCount() < 0 ? 0 : user.getFollowersCount());
         user.setFollowingCount(user.getFollowingCount() < 0 ? 0 : user.getFollowingCount());
+
+        // Create authentication token and set it in SecurityContext
+        try {
+            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, java.util.Collections.emptyList());
+            SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+            securityContext.setAuthentication(auth);
+            SecurityContextHolder.setContext(securityContext);
+            
+            // Save the security context to the session
+            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+        } catch (Exception e) {
+            System.err.println("Error setting authentication context: " + e.getMessage());
+        }
 
         // Convert to DTO before returning
         UserDTO dto = convertToDTO(user);
@@ -136,7 +157,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setEmail(registerDTO.getEmail());
-        user.setName(registerDTO.getName() != null ? registerDTO.getName() : registerDTO.getEmail().split("@")[0]); // Use provided name or email username as default
+        user.setName(registerDTO.getEmail().split("@")[0]); // Use email username as default name
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
         user.setSource(RegistrationSource.CREDENTIAL);
         
