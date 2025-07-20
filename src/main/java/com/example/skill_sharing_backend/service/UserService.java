@@ -8,6 +8,9 @@ import com.example.skill_sharing_backend.dto.EmailLoginDTO;
 import com.example.skill_sharing_backend.dto.UserDTO;
 import com.example.skill_sharing_backend.model.User;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public interface UserService {
     ResponseEntity<User> createUser(User user);
     User getUserById(Long id);
@@ -16,7 +19,7 @@ public interface UserService {
     List<UserDTO> searchUsers(String query);
     List<UserDTO> getAllUsers();
     boolean isFollowing(Long userId, Long followedId);
-    ResponseEntity<?> login(EmailLoginDTO loginDTO);
+    ResponseEntity<?> login(EmailLoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response);
     ResponseEntity<?> register(EmailLoginDTO registerDTO);
     User findByEmail(String email);
     ResponseEntity<User> updateUser(User user);
