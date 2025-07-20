@@ -41,6 +41,45 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
+  const register = async (name, email, password) => {
+    try {
+      const response = await axios.post('http://localhost:8081/api/auth/register', {
+        name,
+        email,
+        password
+      }, {
+        withCredentials: true
+      });
+      
+      if (response.data) {
+        // Don't set user here - let them login after registration
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw new Error(error.response?.data || 'Registration failed');
+    }
+  };
+
+  const loginWithCredentials = async (email, password) => {
+    try {
+      const response = await axios.post('http://localhost:8081/api/auth/login', {
+        email,
+        password
+      }, {
+        withCredentials: true
+      });
+      
+      if (response.data) {
+        setUser(response.data);
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw new Error(error.response?.data || 'Login failed');
+    }
+  };
+
   const loginWithGoogle = () => {
     window.location.href = 'http://localhost:8081/oauth2/authorization/google';
   };
@@ -54,6 +93,8 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Logout failed:', error);
+      // Still clear user locally even if server logout fails
+      setUser(null);
       throw new Error('Failed to log out: ' + error.message);
     }
   };
@@ -62,7 +103,9 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     logout,
-    loginWithGoogle
+    loginWithGoogle,
+    loginWithCredentials,
+    register
   };
 
   return (
