@@ -22,6 +22,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // Log successful authentication
         System.out.println("OAuth2 Login successful for user: " + oauth2User.getAttribute("email"));
         
+        // Set session attribute to indicate successful authentication
+        request.getSession().setAttribute("OAUTH2_LOGIN_SUCCESS", true);
+        
         // Redirect to frontend posts page
         response.sendRedirect("http://localhost:3000/posts");
     }
