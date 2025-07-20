@@ -1,6 +1,10 @@
 package com.example.skill_sharing_backend.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,12 +81,35 @@ public class AuthController {
     }
 
     @PostMapping("/api/auth/login")
-    public ResponseEntity<?> login(@RequestBody EmailLoginDTO loginDTO) {
-        return userService.login(loginDTO);
+    public ResponseEntity<?> login(@RequestBody EmailLoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
+        return userService.login(loginDTO, request, response);
     }
 
     @PostMapping("/api/auth/register")
     public ResponseEntity<?> register(@RequestBody EmailLoginDTO registerDTO) {
         return userService.register(registerDTO);
+    }
+    
+    @GetMapping("/api/auth/session-test")
+    public ResponseEntity<String> sessionTest(HttpServletRequest request) {
+        return ResponseEntity.ok("Session ID: " + request.getSession().getId() + 
+                                ", User: " + SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+    
+    @PostMapping("/api/auth/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // Clear the security context
+            SecurityContextHolder.clearContext();
+            
+            // Invalidate the session
+            if (request.getSession(false) != null) {
+                request.getSession().invalidate();
+            }
+            
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Logout failed");
+        }
     }
 }
