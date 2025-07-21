@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaHeart, FaStar, FaComment, FaPlus, FaUser, FaEdit, FaTrash } from 'react-icons/fa';
+import { 
+  FaHeart, 
+  FaStar, 
+  FaComment, 
+  FaPlus, 
+  FaUser, 
+  FaEdit, 
+  FaTrash,
+  FaPlusCircle,
+  FaExclamationTriangle,
+  FaSpinner,
+  FaBookOpen,
+  FaImage,
+  FaThumbsUp,
+  FaBell
+} from 'react-icons/fa';
 import { favoritePost } from '../services/api';
 import { useRequireAuth } from '../../hooks/useRequireAuth';
 import CommentSection from './CommentSection';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import './PostList.css';
 
 const PostList = () => {
@@ -29,6 +45,7 @@ const PostList = () => {
       setPosts(response.data);
       console.log('Current user:', user);
       console.log('Fetched posts:', response.data);
+      console.log('Sample post structure:', response.data[0]); // Debug log
     } catch (error) {
       setError('Failed to fetch posts');
       console.error('Error fetching posts:', error);
@@ -63,7 +80,12 @@ const PostList = () => {
 
       if (response.status === 204) {
         setPosts(posts.filter(post => post.id !== postId));
-        showSuccessMessage('Post deleted successfully');
+        toast.success('Post deleted successfully', {
+          style: {
+            background: '#10b981',
+            color: 'white',
+          },
+        });
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || 
@@ -97,7 +119,12 @@ const PostList = () => {
         ));
         setEditingPost(null);
         setEditForm({ title: '', description: '' });
-        showSuccessMessage('Post updated successfully');
+        toast.success('Post updated successfully', {
+          style: {
+            background: '#10b981',
+            color: 'white',
+          },
+        });
       }
     } catch (err) {
       setError('Failed to update post: ' + (err.response?.data?.message || err.message));
@@ -256,12 +283,28 @@ const PostList = () => {
     }
   };
 
+  const handleNotification = async (postId) => {
+    // This could send a notification or bookmark the post for later
+    try {
+      // For now, just show a toast notification
+      toast.success('You will be notified about updates to this post!', {
+        style: {
+          background: '#10b981',
+          color: 'white',
+        },
+      });
+    } catch (error) {
+      console.error('Error setting notification:', error);
+    }
+  };
+
   const showSuccessMessage = (message) => {
-    const successMessage = document.createElement('div');
-    successMessage.className = 'success-message';
-    successMessage.textContent = message;
-    document.body.appendChild(successMessage);
-    setTimeout(() => successMessage.remove(), 3000);
+    toast.success(message, {
+      style: {
+        background: '#10b981',
+        color: 'white',
+      },
+    });
   };
 
   const isPostOwner = (post) => {
@@ -285,178 +328,219 @@ const PostList = () => {
 
   if (loading) {
     return (
-      <div className="content-container">
-        <div className="loading-spinner">Loading...</div>
+      <div className="posts-page">
+        <div className="loading-spinner">
+          <div className="spinner">
+            <FaSpinner />
+          </div>
+          <p>Loading posts...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="content-container">
-        <div className="error-message">{error}</div>
+      <div className="posts-page">
+        <div className="error-message">
+          <FaExclamationTriangle />
+          <span>{error}</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="content-container">
-      <div className="page-header">
-        <div>
-          <h1 className="page-title">🎯 Skill Sharing Posts</h1>
-          <p className="page-subtitle">Discover and share knowledge with the community</p>
+    <div className="posts-page">
+      <div className="posts-page-container">
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="post-page-title">
+                <FaBookOpen className="title-icon" />
+                Skill Sharing Posts
+              </h1>
+              <p className="post-page-subtitle">Discover and share knowledge with the community</p>
+            </div>
+            <Link to="/create-post" className="btn btn-primary">
+              <FaPlusCircle />
+              Create Post
+            </Link>
+          </div>
         </div>
-        <Link to="/create-post" className="btn btn-primary">
-          <FaPlus style={{marginRight: '0.5rem'}} />
-          Create Post
-        </Link>
-      </div>
-      {!loading && posts.length === 0 ? (
-        <p className="no-posts">No posts available. Create one now!</p>
-      ) : (
-        <div className="post-list">
-          {posts.map((post) => (
-            <div key={post.id} className="post-card">
-              <div className="post-header">
-                <Link to={`/profile/${post.user.id}`} className="user-profile">
-                  {post.user.profileImage ? (
-                    <img 
-                      src={
-                        post.user.profileImage.startsWith('data:') 
-                          ? post.user.profileImage 
-                          : post.user.profileImage.startsWith('http') 
+
+        {!loading && posts.length === 0 ? (
+          <div className="no-posts-card">
+            <div className="no-posts-icon">
+              <FaBookOpen />
+            </div>
+            <h3>No posts yet</h3>
+            <p>Be the first to share your knowledge with the community!</p>
+            <Link to="/create-post" className="btn btn-primary">
+              <FaPlusCircle />
+              Create Your First Post
+            </Link>
+          </div>
+        ) : (
+          <div className="posts-list">
+            {posts.map((post) => (
+              <div key={post.id} className="post-card">
+                <div className="post-header">
+                  <Link to={`/profile/${post.user.id}`} className="post-user">
+                    {post.user.profileImage ? (
+                      <img 
+                        src={
+                          post.user.profileImage.startsWith('data:') 
                             ? post.user.profileImage 
-                            : `data:image/jpeg;base64,${post.user.profileImage}`
-                      }
-                      alt={post.user.name} 
-                      className="user-avatar"
-                      onError={(e) => {
-                        console.log('Profile image error:', {
-                          originalSrc: e.target.src,
-                          user: post.user.name,
-                          profileImage: post.user.profileImage
-                        });
-                        e.target.onerror = null;
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.user.name)}&background=random`;
-                      }}
-                    />
-                  ) : (
-                    <div className="default-avatar">
-                      <FaUser />
+                            : post.user.profileImage.startsWith('http') 
+                              ? post.user.profileImage 
+                              : `data:image/jpeg;base64,${post.user.profileImage}`
+                        }
+                        alt={post.user.name} 
+                        className="user-avatar"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(post.user.name)}&background=random`;
+                        }}
+                      />
+                    ) : (
+                      <div className="default-avatar">
+                        <FaUser />
+                      </div>
+                    )}
+                    <div className="user-info">
+                      <h4 className="user-name">{post.user.name}</h4>
+                      <span className="post-date">
+                        {new Date(post.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </Link>
+                  {isPostOwner(post) && (
+                    <div className="post-actions-owner">
+                      <button 
+                        className="action-btn edit-btn"
+                        onClick={() => startEditing(post)}
+                        title="Edit post"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button 
+                        className="action-btn delete-btn"
+                        onClick={() => handleDeletePost(post.id)}
+                        title="Delete post"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   )}
-                  <div className="user-info">
-                    <h3>{post.user.name}</h3>
-                    <span className="post-date">
-                      {new Date(post.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </Link>
-                {isPostOwner(post) && (
-                  <div className="post-actions-owner">
-                    <button 
-                      className="edit-btn"
-                      onClick={() => startEditing(post)}
-                      title="Edit post"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button 
-                      className="delete-btn"
-                      onClick={() => handleDeletePost(post.id)}
-                      title="Delete post"
-                    >
-                      <FaTrash />
-                    </button>
+                </div>
+                
+                <div className="post-content">
+                  {editingPost === post.id ? (
+                    <div className="edit-form">
+                      <input
+                        type="text"
+                        value={editForm.title}
+                        onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                        placeholder="Title"
+                        className="edit-input"
+                      />
+                      <textarea
+                        value={editForm.description}
+                        onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                        placeholder="Description"
+                        className="edit-textarea"
+                      />
+                      <div className="edit-actions">
+                        <button 
+                          className="btn btn-primary"
+                          onClick={() => handleEditPost(post.id)}
+                        >
+                          Save Changes
+                        </button>
+                        <button 
+                          className="btn btn-secondary"
+                          onClick={cancelEditing}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <h2 className="post-title">
+                        <FaBookOpen className="post-icon" />
+                        {post.title}
+                      </h2>
+                      <p className="post-description">{post.description}</p>
+                      {post.image1 && (
+                        <div className="post-image-container">
+                          <img
+                            src={`data:image/jpeg;base64,${post.image1}`}
+                            alt="Post"
+                            className="post-image"
+                            onError={(e) => (e.target.style.display = 'none')}
+                          />
+                          <div className="image-overlay">
+                            <FaImage />
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                <div className="post-actions">
+                  <button 
+                    className={`action-btn like-btn ${
+                      post.likedBy?.includes(parseInt(user?.id || user?.sub)) ? 'liked' : ''
+                    } ${likeAnimations[post.id] ? 'animate' : ''}`}
+                    onClick={() => handleLike(post.id)}
+                    disabled={!user}
+                  >
+                    <FaThumbsUp />
+                    <span>{post.likeCount || 0}</span>
+                  </button>
+                  <button 
+                    className={`action-btn favorite-btn ${localFavorites[post.id] ? 'active' : ''}`}
+                    onClick={() => handleFavorite(post.id)}
+                    disabled={!user}
+                  >
+                    <FaStar />
+                    <span>{post.favoriteCount || 0}</span>
+                  </button>
+                  <button 
+                    className={`action-btn comment-btn ${expandedComments[post.id] ? 'active' : ''}`}
+                    onClick={() => toggleComments(post.id)}
+                  >
+                    <FaComment />
+                    <span>{post.comments?.length || 0}</span>
+                  </button>
+                  <button 
+                    className="action-btn notification-btn"
+                    onClick={() => handleNotification(post.id)}
+                    disabled={!user}
+                    title="Get notified about updates"
+                  >
+                    <FaBell />
+                    <span>Notify</span>
+                  </button>
+                </div>
+
+                {expandedComments[post.id] && (
+                  <div className="comments-section">
+                    <CommentSection
+                      postId={post.id}
+                      comments={post.comments}
+                      onCommentSubmit={(content) => handleCommentSubmit(post.id, content)}
+                    />
                   </div>
                 )}
               </div>
-              
-              {editingPost === post.id ? (
-                <div className="edit-form">
-                  <input
-                    type="text"
-                    value={editForm.title}
-                    onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                    placeholder="Title"
-                    className="edit-input"
-                  />
-                  <textarea
-                    value={editForm.description}
-                    onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                    placeholder="Description"
-                    className="edit-textarea"
-                  />
-                  <div className="edit-actions">
-                    <button 
-                      className="save-btn"
-                      onClick={() => handleEditPost(post.id)}
-                    >
-                      Save
-                    </button>
-                    <button 
-                      className="cancel-btn"
-                      onClick={cancelEditing}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <h2 className="post-title">{post.title}</h2>
-                  <p className="post-description">{post.description}</p>
-                  {post.image1 && (
-                    <img
-                      src={`data:image/jpeg;base64,${post.image1}`}
-                      alt="Post"
-                      className="post-image"
-                      onError={(e) => (e.target.style.display = 'none')}
-                    />
-                  )}
-                </>
-              )}
-
-              <div className="post-actions">
-                <button 
-                  className={`action-btn like-btn ${
-                    post.likedBy?.includes(parseInt(user?.id || user?.sub)) ? 'liked' : ''
-                  } ${likeAnimations[post.id] ? 'animate' : ''}`}
-                  onClick={() => handleLike(post.id)}
-                  disabled={!user}
-                >
-                  <FaHeart />
-                  <span>{post.likeCount || 0}</span>
-                </button>
-                <button 
-                  className={`action-btn favorite-btn ${localFavorites[post.id] ? 'active' : ''}`}
-                  onClick={() => handleFavorite(post.id)}
-                  disabled={!user}
-                >
-                  <FaStar />
-                  <span>{post.favoriteCount || 0}</span>
-                </button>
-                <button 
-                  className={`action-btn comment-btn ${expandedComments[post.id] ? 'active' : ''}`}
-                  onClick={() => toggleComments(post.id)}
-                >
-                  <FaComment />
-                  <span>{post.comments?.length || 0}</span>
-                </button>
-              </div>
-              {expandedComments[post.id] && (
-                <div className="comments-section">
-                  <CommentSection
-                    postId={post.id}
-                    comments={post.comments}
-                    onCommentSubmit={(content) => handleCommentSubmit(post.id, content)}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
