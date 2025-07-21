@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPlus, FaUser, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaUser, FaEdit, FaTrash, FaRocket, FaChartLine, FaHeart, FaBrain } from 'react-icons/fa';
 import { getProgress, deleteProgressUpdate, updateProgress } from '../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 import './ProgressList.css';
@@ -101,40 +101,70 @@ const ProgressList = () => {
 
   if (loading) {
     return (
-      <div className="content-container">
-        <div className="loading-spinner">Loading progress updates...</div>
+      <div className="progress-list-container">
+        <div className="loading-overlay">
+          <div className="loading-content">
+            <div className="loading-spinner-large"></div>
+            <div className="loading-text">Loading progress updates...</div>
+          </div>
+        </div>
       </div>
     );
   }
 
+  const getTemplateIcon = (templateType) => {
+    switch(templateType) {
+      case 'MILESTONE': return '🏆';
+      case 'CHALLENGE': return '💪';
+      case 'REFLECTION': return '🤔';
+      default: return '📝';
+    }
+  };
+
   return (
-    <div className="content-container">
-      <div className="page-header">
-        <h1 className="page-title">📈 Progress Updates</h1>
-        <Link to="/create-progress" className="btn btn-primary">
-          <FaPlus style={{marginRight: '0.5rem'}} />
-          Create Progress Update
+    <div className="progress-list-container">
+      <div className="progress-list-header">
+        <div className="header-content">
+          <h1 className="progress-list-title">
+            <span className="title-icon">📈</span>
+            Progress Gallery
+          </h1>
+          <p className="progress-list-subtitle">Track and celebrate your learning journey</p>
+        </div>
+        <Link to="/create-progress" className="create-button">
+          <FaPlus className="create-icon" />
+          <span>Share Progress</span>
         </Link>
       </div>
-      {error && <div className="form-error">{error}</div>}
-      {!loading && updates.length === 0 ? (
-        <div className="card card-info">
-          <div className="card-content text-center">
-            <p>📊 No progress updates available</p>
-            <p style={{color: '#718096', fontSize: '0.875rem', marginBottom: '1rem'}}>Share your learning progress with the community!</p>
-            <Link to="/create-progress" className="btn btn-primary">
-              <FaPlus style={{marginRight: '0.5rem'}} />
-              Create Your First Update
-            </Link>
+
+      {error && (
+        <div className="error-card">
+          <div className="error-content">
+            <span className="error-icon">⚠️</span>
+            <div className="error-message">{error}</div>
           </div>
+        </div>
+      )}
+
+      {!loading && updates.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-icon">📊</div>
+          <h3 className="empty-title">No Progress Updates Yet</h3>
+          <p className="empty-description">
+            Be the first to share your learning journey with the community!
+          </p>
+          <Link to="/create-progress" className="empty-action-btn">
+            <FaRocket style={{marginRight: '0.5rem'}} />
+            Create Your First Update
+          </Link>
         </div>
       ) : (
         <div className="progress-list">
           {updates.map(update => (
-            <div key={update.id} className="card progress-card">
-              <div className="card-content">
-                <div className="progress-user-info">
-                  <div className="user-profile">
+            <div key={update.id} className="progress-card">
+              <div className="card-header">
+                <div className="user-profile">
+                  <div className="avatar-container">
                     {update.userProfileImage ? (
                       <img 
                         src={update.userProfileImage} 
@@ -142,71 +172,87 @@ const ProgressList = () => {
                         className="profile-image"
                       />
                     ) : (
-                    <FaUser className="default-profile-icon" />
-                  )}
-                  <span className="user-name">{update.userName}</span>
+                      <div className="default-avatar">
+                        <FaUser className="avatar-icon" />
+                      </div>
+                    )}
+                    <div className="user-info">
+                      <span className="user-name">{update.userName}</span>
+                      <span className="progress-date">
+                        {new Date(update.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="template-badge">
+                    <span className="template-icon">{getTemplateIcon(update.templateType)}</span>
+                    <span className="template-text">{update.templateType}</span>
+                  </div>
                 </div>
                 {user && update.userId === user.id && (
-                  <div className="progress-actions-owner">
+                  <div className="progress-actions">
                     <button 
-                      className="edit-btn"
+                      className="action-btn edit-btn"
                       onClick={() => startEditing(update)}
+                      title="Edit progress"
                     >
                       <FaEdit />
                     </button>
                     <button 
-                      className="delete-btn"
+                      className="action-btn delete-btn"
                       onClick={() => handleDeleteProgress(update.id)}
+                      title="Delete progress"
                     >
                       <FaTrash />
                     </button>
                   </div>
                 )}
               </div>
-              {editingProgress === update.id ? (
-                <div className="edit-form">
-                  <select
-                    value={editForm.templateType}
-                    onChange={(e) => setEditForm({ ...editForm, templateType: e.target.value })}
-                    className="edit-input"
-                  >
-                    <option value="GENERAL">General Update</option>
-                    <option value="MILESTONE">Milestone</option>
-                    <option value="CHALLENGE">Challenge</option>
-                    <option value="REFLECTION">Reflection</option>
-                  </select>
-                  <textarea
-                    value={editForm.content}
-                    onChange={(e) => setEditForm({ ...editForm, content: e.target.value })}
-                    placeholder="Share your progress..."
-                    className="edit-textarea"
-                  />
-                  <div className="edit-actions">
-                    <button 
-                      className="save-btn"
-                      onClick={() => handleEditProgress(update.id)}
-                    >
-                      Save
-                    </button>
-                    <button 
-                      className="cancel-btn"
-                      onClick={cancelEditing}
-                    >
-                      Cancel
-                    </button>
+
+              <div className="card-content">
+                {editingProgress === update.id ? (
+                  <div className="edit-form">
+                    <div className="form-group-modern">
+                      <label className="form-label-modern">Update Type</label>
+                      <select
+                        value={editForm.templateType}
+                        onChange={(e) => setEditForm({ ...editForm, templateType: e.target.value })}
+                        className="form-input-modern form-select-modern"
+                      >
+                        <option value="GENERAL">📝 General Update</option>
+                        <option value="MILESTONE">🏆 Milestone</option>
+                        <option value="CHALLENGE">💪 Challenge</option>
+                        <option value="REFLECTION">🤔 Reflection</option>
+                      </select>
+                    </div>
+                    <div className="form-group-modern">
+                      <label className="form-label-modern">Progress Content</label>
+                      <textarea
+                        value={editForm.content}
+                        onChange={(e) => setEditForm({ ...editForm, content: e.target.value })}
+                        placeholder="Share your progress..."
+                        className="form-input-modern form-textarea-modern"
+                      />
+                    </div>
+                    <div className="edit-actions">
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleEditProgress(update.id)}
+                      >
+                        Save Changes
+                      </button>
+                      <button 
+                        className="btn btn-outline btn-sm"
+                        onClick={cancelEditing}
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="progress-content">
-                  <p className="progress-text">{update.content}</p>
-                  <p className="progress-type">
-                    <strong>Type:</strong> {update.templateType}
-                  </p>
-                  <p className="progress-date">
-                    <strong>Posted:</strong> {new Date(update.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              )}
+                ) : (
+                  <div className="progress-content">
+                    <p className="progress-text">{update.content}</p>
+                  </div>
+                )}
               </div>
             </div>
           ))}
