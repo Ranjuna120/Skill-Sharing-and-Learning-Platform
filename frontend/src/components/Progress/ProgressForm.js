@@ -80,12 +80,18 @@ const ProgressForm = () => {
 
   if (!user) {
     return (
-      <div className="page-container">
-        <div className="card card-error">
-          <div className="card-content text-center">
-            <h2>Authentication Required</h2>
-            <p>Please log in to create a progress update.</p>
-            <button className="btn btn-primary" onClick={() => navigate('/login')}>
+      <div className="progress-form-container">
+        <div className="form-modern">
+          <div className="form-header">
+            <h2 className="form-title-modern">Authentication Required</h2>
+            <p className="form-subtitle">Please log in to create a progress update.</p>
+          </div>
+          <div className="form-actions-modern center">
+            <button 
+              className="btn btn-primary btn-lg" 
+              onClick={() => navigate('/login')}
+            >
+              <span>🔐</span>
               Login
             </button>
           </div>
@@ -95,14 +101,22 @@ const ProgressForm = () => {
   }
 
   return (
-    <div className="content-container">
+    <div className="progress-form-container">
       <div className="form-modern animate-fade-in">
         <div className="form-header">
-          <h1 className="form-title-modern">Share Your Progress</h1>
-          <p className="form-subtitle">Update the community on your learning journey</p>
+          <h1 className="progress-form-title-modern">
+            <span className="title-icon">📈</span>
+            Share Your Progress
+          </h1>
+          <p className="progress-form-subtitle">Update the community on your learning journey</p>
         </div>
         
-        {error && <div className="form-error">⚠️ {error}</div>}
+        {error && (
+          <div className="form-error">
+            <span>⚠️</span>
+            {error}
+          </div>
+        )}
         
         <form onSubmit={handleSubmit}>
           <div className="form-group-modern">
@@ -157,7 +171,7 @@ const ProgressForm = () => {
               ) : (
                 <>
                   <span>📈</span>
-                  Create Update
+                  Share Progress
                 </>
               )}
             </button>
