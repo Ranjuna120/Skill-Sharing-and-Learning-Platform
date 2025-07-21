@@ -1,132 +1,217 @@
 /* PlanForm.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 .plan-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #74ebd5, #acb6e5);
-    padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 1rem;
+  padding-top: calc(80px + 2rem); /* Account for fixed navigation bar + original padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plan-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') repeat;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.plan-form-container > h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.plan-form-card {
+  background: rgba(235, 233, 233, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+
+.plan-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4facfe, #00f2fe, #a8edea);
+  border-radius: 20px 20px 0 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.plan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color:  white;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid rgba(19, 71, 193, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d3748;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #64748b;
+  opacity: 0.8;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #4facfe;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(248, 113, 113, 0.9);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .plan-form-container {
+    padding: 1rem;
+  }
+  
+  .plan-form-container > h1 {
+    font-size: 2rem;
   }
   
   .plan-form-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 40px;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: fadeIn 1s ease-in-out;
+    padding: 1.5rem;
+    margin: 0 1rem;
   }
   
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .plan-form-title {
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: #007c67;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .plan-form-subtitle {
-    font-size: 1.5rem;
-    color: #033807;
-    margin-bottom: 30px;
-    opacity: 0.8;
-  }
-  
-  .plan-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-  
-  .form-input,
-  .form-textarea {
-    padding: 12px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    color: #4c00fd;
-    outline: none;
-    transition: all 0.3s ease;
-  }
-  
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: #000000;
-    opacity: 0.8;
-  }
-  
-  .form-input:focus,
-  .form-textarea:focus {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-  
-  .form-textarea {
-    resize: vertical;
-    min-height: 100px;
+  .form-group input,
+  .form-group textarea {
+    padding: 0.875rem;
   }
   
   .submit-btn {
-    padding: 12px;
-    background: linear-gradient(90deg, #ff6f61, #ff8e53);
-    color: #ff0000;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-form-container > h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
   
-  .submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  .plan-form-card {
+    padding: 1rem;
+    margin: 0 0.5rem;
   }
   
-  .submit-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  .submit-btn {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
   }
-  
-  @media (max-width: 480px) {
-    .plan-form-card {
-      padding: 30px;
-      max-width: 90%;
-    }
-  
-    .plan-form-title {
-      font-size: 1.8rem;
-    }
-  
-    .plan-form-subtitle {
-      font-size: 0.9rem;
-    }
-  
-    .submit-btn {
-      font-size: 1rem;
-      padding: 10px;
-    }
-  }
+}
