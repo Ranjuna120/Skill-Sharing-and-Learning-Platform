@@ -43,7 +43,7 @@ const UserPosts = ({ userId }) => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:8082/api/posts/${postId}`, {
+      const response = await axios.delete(`http://localhost:8081/api/posts/${postId}`, {
         params: { userId: currentUser.id },
         withCredentials: true
       });
@@ -70,7 +70,7 @@ const UserPosts = ({ userId }) => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:8082/api/posts/${postId}`, 
+      const response = await axios.put(`http://localhost:8081/api/posts/${postId}`, 
         {
           title: editForm.title,
           description: editForm.description
@@ -142,7 +142,7 @@ const UserPosts = ({ userId }) => {
       }));
 
       // Make API call
-      await axios.post(`http://localhost:8082/api/posts/${postId}/like`, null, {
+      await axios.post(`http://localhost:8081/api/posts/${postId}/like`, null, {
         params: { userId },
         withCredentials: true
       });
@@ -173,7 +173,7 @@ const UserPosts = ({ userId }) => {
       }
 
       await axios.post(
-        `http://localhost:8082/api/posts/${postId}/comments`,
+        `http://localhost:8081/api/posts/${postId}/comments`,
         { content: comment },
         {
           params: { userId: currentUser.id },
@@ -185,7 +185,7 @@ const UserPosts = ({ userId }) => {
       setCommentInputs(prev => ({ ...prev, [postId]: '' }));
       
       // Refresh comments
-      const response = await axios.get(`http://localhost:8082/api/posts/${postId}/comments`, {
+      const response = await axios.get(`http://localhost:8081/api/posts/${postId}/comments`, {
         withCredentials: true
       });
       
