@@ -35,7 +35,7 @@ const PlanForm = () => {
     }
 
     try {
-      await axios.post('http://localhost:8082/api/plans', 
+      await axios.post('http://localhost:8081/api/plans', 
         { ...formData },
         {
           params: { userId },
@@ -69,57 +69,59 @@ const PlanForm = () => {
     <div className="plan-form-container">
       <h1>Create Learning Plan</h1>
       {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit} className="plan-form">
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            placeholder="Enter plan title"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="topics">Topics</label>
-          <textarea
-            id="topics"
-            name="topics"
-            value={formData.topics}
-            onChange={handleChange}
-            required
-            placeholder="List the topics you want to learn"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="resources">Resources</label>
-          <textarea
-            id="resources"
-            name="resources"
-            value={formData.resources}
-            onChange={handleChange}
-            required
-            placeholder="List the resources you'll use (books, courses, etc.)"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="timeline">Timeline</label>
-          <input
-            type="text"
-            id="timeline"
-            name="timeline"
-            value={formData.timeline}
-            onChange={handleChange}
-            required
-            placeholder="e.g., 3 months, 6 weeks"
-          />
-        </div>
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? 'Creating...' : 'Create Plan'}
-        </button>
-      </form>
+      <div className="plan-form-card">
+        <form onSubmit={handleSubmit} className="plan-form">
+          <div className="form-group">
+            <label htmlFor="title">Plan Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+              placeholder="Enter your learning plan title"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="topics">Topics to Learn</label>
+            <textarea
+              id="topics"
+              name="topics"
+              value={formData.topics}
+              onChange={handleChange}
+              required
+              placeholder="List the topics you want to learn (e.g., JavaScript, React, Node.js)"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="resources">Learning Resources</label>
+            <textarea
+              id="resources"
+              name="resources"
+              value={formData.resources}
+              onChange={handleChange}
+              required
+              placeholder="List your learning resources (books, courses, tutorials, etc.)"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="timeline">Timeline</label>
+            <input
+              type="text"
+              id="timeline"
+              name="timeline"
+              value={formData.timeline}
+              onChange={handleChange}
+              required
+              placeholder="Expected completion time (e.g., 3 months, 6 weeks)"
+            />
+          </div>
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Creating Plan...' : 'Create Learning Plan'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
