@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaPlus, FaUser, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaUser, FaEdit, FaTrash, FaBook, FaClock, FaGraduationCap, FaBullseye } from 'react-icons/fa';
 import { getPlans, deleteLearningPlan } from '../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
@@ -88,118 +88,185 @@ const PlanList = () => {
   };
 
   if (loading) {
-    return <div className="plan-list-container">Loading plans...</div>;
+    return (
+      <div className="plans-page">
+        <div className="plans-page-container">
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Loading learning plans...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="plan-list-container">
-      <div className="plan-list-header">
-        <h1 className="plan-list-title">Learning Plans</h1>
-        <Link to="/create-plan" className="create-button">
-          <FaPlus className="create-icon" />
-          <span>Create Plan</span>
-        </Link>
-      </div>
-      {error && <p className="plan-list-error">{error}</p>}
-      <div className="plan-list">
-        {plans.length === 0 ? (
-          <p className="no-plans">No plans available. Create one now!</p>
-        ) : (
-          plans.map(plan => (
-            <div key={plan.id} className="plan-card">
-              <div className="plan-user-info">
-                <div className="user-profile">
-                  {plan.userProfileImage ? (
-                    <img 
-                      src={plan.userProfileImage} 
-                      alt={plan.userName} 
-                      className="profile-image"
-                    />
-                  ) : (
-                    <FaUser className="default-profile-icon" />
+    <div className="plans-page">
+      <div className="plans-page-container">
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="Plan-page-title">
+                <FaGraduationCap className="title-icon" />
+                Learning Plans
+              </h1>
+              <p className="Plan-page-subtitle">Discover structured learning paths and create your own</p>
+            </div>
+            <Link to="/create-plan" className="btn btn-primary">
+              <FaPlus />
+              <span>Create Plan</span>
+            </Link>
+          </div>
+        </div>
+
+        {error && (
+          <div className="error-message">
+            <span>⚠️</span>
+            {error}
+          </div>
+        )}
+
+        <div className="plans-grid">
+          {plans.length === 0 ? (
+            <div className="no-plans-card">
+              <div className="no-plans-icon">
+                <FaBook />
+              </div>
+              <h3>No Learning Plans Yet</h3>
+              <p>Be the first to create a learning plan and share your knowledge with the community!</p>
+              <Link to="/create-plan" className="btn btn-primary">
+                <FaPlus />
+                Create Your First Plan
+              </Link>
+            </div>
+          ) : (
+            plans.map(plan => (
+              <div key={plan.id} className="plan-card">
+                <div className="plan-header">
+                  <div className="plan-user">
+                    {plan.userProfileImage ? (
+                      <img 
+                        src={plan.userProfileImage.startsWith('data:') 
+                          ? plan.userProfileImage 
+                          : plan.userProfileImage.startsWith('http') 
+                            ? plan.userProfileImage 
+                            : `data:image/jpeg;base64,${plan.userProfileImage}`
+                        } 
+                        alt={plan.userName} 
+                        className="user-avatar"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(plan.userName)}&background=667eea&color=fff`;
+                        }}
+                      />
+                    ) : (
+                      <div className="default-avatar">
+                        <FaUser />
+                      </div>
+                    )}
+                    <span className="user-name">{plan.userName}</span>
+                  </div>
+                  {user && plan.userId === user.id && (
+                    <div className="plan-actions">
+                      <button 
+                        className="action-btn edit-btn"
+                        onClick={() => startEditing(plan)}
+                        title="Edit plan"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button 
+                        className="action-btn delete-btn"
+                        onClick={() => handleDeletePlan(plan.id)}
+                        title="Delete plan"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
                   )}
-                  <span className="user-name">{plan.userName}</span>
                 </div>
-                {user && plan.userId === user.id && (
-                  <div className="plan-actions-owner">
-                    <button 
-                      className="edit-btn"
-                      onClick={() => startEditing(plan)}
-                    >
-                      <FaEdit />
-                    </button>
-                    <button 
-                      className="delete-btn"
-                      onClick={() => handleDeletePlan(plan.id)}
-                    >
-                      <FaTrash />
-                    </button>
+
+                {editingPlan === plan.id ? (
+                  <div className="edit-form">
+                    <input
+                      type="text"
+                      value={editForm.title}
+                      onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                      placeholder="Plan title"
+                      className="edit-input"
+                    />
+                    <textarea
+                      value={editForm.topics}
+                      onChange={(e) => setEditForm({ ...editForm, topics: e.target.value })}
+                      placeholder="Topics"
+                      className="edit-textarea"
+                    />
+                    <textarea
+                      value={editForm.resources}
+                      onChange={(e) => setEditForm({ ...editForm, resources: e.target.value })}
+                      placeholder="Resources"
+                      className="edit-textarea"
+                    />
+                    <input
+                      type="text"
+                      value={editForm.timeline}
+                      onChange={(e) => setEditForm({ ...editForm, timeline: e.target.value })}
+                      placeholder="Timeline"
+                      className="edit-input"
+                    />
+                    <div className="edit-actions">
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => handleEditPlan(plan.id)}
+                      >
+                        Save
+                      </button>
+                      <button 
+                        className="btn btn-outline"
+                        onClick={cancelEditing}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="plan-content">
+                    <h3 className="plan-title">
+                      <FaBullseye className="plan-icon" />
+                      {plan.title}
+                    </h3>
+                    
+                    <div className="plan-details">
+                      <div className="plan-section">
+                        <div className="section-header">
+                          <FaBook className="section-icon" />
+                          <span className="section-title">Topics</span>
+                        </div>
+                        <p className="section-content">{plan.topics}</p>
+                      </div>
+                      
+                      <div className="plan-section">
+                        <div className="section-header">
+                          <FaGraduationCap className="section-icon" />
+                          <span className="section-title">Resources</span>
+                        </div>
+                        <p className="section-content">{plan.resources}</p>
+                      </div>
+                      
+                      <div className="plan-section">
+                        <div className="section-header">
+                          <FaClock className="section-icon" />
+                          <span className="section-title">Timeline</span>
+                        </div>
+                        <p className="section-content">{plan.timeline}</p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
-              
-              {editingPlan === plan.id ? (
-                <div className="edit-form">
-                  <input
-                    type="text"
-                    value={editForm.title}
-                    onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                    placeholder="Title"
-                    className="edit-input"
-                  />
-                  <textarea
-                    value={editForm.topics}
-                    onChange={(e) => setEditForm({ ...editForm, topics: e.target.value })}
-                    placeholder="Topics"
-                    className="edit-textarea"
-                  />
-                  <textarea
-                    value={editForm.resources}
-                    onChange={(e) => setEditForm({ ...editForm, resources: e.target.value })}
-                    placeholder="Resources"
-                    className="edit-textarea"
-                  />
-                  <input
-                    type="text"
-                    value={editForm.timeline}
-                    onChange={(e) => setEditForm({ ...editForm, timeline: e.target.value })}
-                    placeholder="Timeline"
-                    className="edit-input"
-                  />
-                  <div className="edit-actions">
-                    <button 
-                      className="save-btn"
-                      onClick={() => handleEditPlan(plan.id)}
-                    >
-                      Save
-                    </button>
-                    <button 
-                      className="cancel-btn"
-                      onClick={cancelEditing}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <h2 className="plan-title">{plan.title}</h2>
-                  <div className="plan-details">
-                    <p className="plan-detail">
-                      <strong>Topics:</strong> {plan.topics}
-                    </p>
-                    <p className="plan-detail">
-                      <strong>Resources:</strong> {plan.resources}
-                    </p>
-                    <p className="plan-detail">
-                      <strong>Timeline:</strong> {plan.timeline}
-                    </p>
-                  </div>
-                </>
-              )}
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
