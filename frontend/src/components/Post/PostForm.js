@@ -127,8 +127,8 @@ const PostForm = () => {
     <div className="content-container">
       <div className="form-modern animate-fade-in">
         <div className="form-header">
-          <h1 className="form-title-modern">Share Your Knowledge</h1>
-          <p className="form-subtitle">Create a post to share skills, ask questions, or connect with others</p>
+          <h1 className="post-form-title-modern">Share Your Knowledge</h1>
+          <p className="post-form-subtitle">Create a post to share skills, ask questions, or connect with others</p>
         </div>
         
         <form onSubmit={handleSubmit}>
