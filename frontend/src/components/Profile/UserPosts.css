@@ -14,13 +14,13 @@
     font-size: 24px;
 }
 
-.post-card {
+/* .post-card {
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+} */
 
 .post-card:hover {
     transform: translateY(-2px);
@@ -32,7 +32,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    background: #f8f9fa;
+    background: #667eea;
     border-bottom: 1px solid #eee;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .edit-btn {
-    color: #3498db;
+    color: #2639e7;
 }
 
 .edit-btn:hover {
@@ -70,7 +70,7 @@
 }
 
 .delete-btn {
-    color: #e74c3c;
+    color: #f3220b;
 }
 
 .delete-btn:hover {
