@@ -155,44 +155,52 @@ const NotificationsPage = () => {
 
   if (loading) {
     return (
-      <div className="content-container">
-        <div className="loading-spinner">Loading notifications...</div>
+      <div className="notifications-page">
+        <div className="notifications-page-container">
+          <div className="loading-spinner">Loading notifications...</div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="content-container">
-        <div className="error-message">{error}</div>
+      <div className="notifications-page">
+        <div className="notifications-page-container">
+          <div className="error-message">{error}</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="content-container">
-      <div className="page-header">
-        <h1 className="page-title">📮 Notifications</h1>
-        <p className="page-subtitle">Stay updated with your latest activities</p>
+    <div className="notifications-page">
+      <div className="notifications-page-container">
+        <div className="page-header">
+          <h1 className="notifications-page-title">📮 Notifications</h1>
+          <p className="notifications-page-subtitle">Stay updated with your latest activities</p>
+        </div>
+        <div className="notifications-container">
+          {notifications.length === 0 ? (
+            <div className="card card-info">
+              <div className="card-content text-center">
+                <p>🔔 No notifications yet</p>
+                <p style={{color: '#718096', fontSize: '0.875rem'}}>You'll see notifications when users interact with your posts</p>
+              </div>
+            </div>
+          ) : (
+            <div className="notifications-list">
+              {notifications.map((notification) => (
+                <NotificationCard
+                  key={notification.id}
+                  notification={notification}
+                  onClear={handleClearNotification}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      {notifications.length === 0 ? (
-        <div className="card card-info">
-          <div className="card-content text-center">
-            <p>🔔 No notifications yet</p>
-            <p style={{color: '#718096', fontSize: '0.875rem'}}>You'll see notifications when users interact with your posts</p>
-          </div>
-        </div>
-      ) : (
-        <div className="notifications-list">
-          {notifications.map((notification) => (
-            <NotificationCard
-              key={notification.id}
-              notification={notification}
-              onClear={handleClearNotification}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
