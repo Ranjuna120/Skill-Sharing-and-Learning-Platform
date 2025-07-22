@@ -2,6 +2,7 @@ import React from 'react';
 import UserSearch from '../components/User/UserSearch';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { FaUsers, FaSearch } from 'react-icons/fa';
 
 const UserSearchPage = () => {
   const { user } = useAuth();
@@ -24,14 +25,21 @@ const UserSearchPage = () => {
   }
 
   return (
-    <div className="content-container">
-      <div className="page-header">
-        <div>
-          <h1 className="page-title">🔍 Find Users</h1>
-          <p className="page-subtitle">Connect with other learners and experts</p>
+    <div className="user-search-page">
+      <div className="user-search-page-container">
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="page-title">
+                <FaUsers className="title-icon" />
+                Find Users
+              </h1>
+              <p className="page-subtitle">Connect with other learners and experts in the community</p>
+            </div>
+          </div>
         </div>
+        <UserSearch currentUserId={user.id} />
       </div>
-      <UserSearch currentUserId={user.id} />
     </div>
   );
 };
