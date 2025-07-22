@@ -193,9 +193,24 @@
 }
 
 .file-input-label.has-file {
-  background: rgba(72, 187, 120, 0.2);
-  border-color: rgba(72, 187, 120, 0.5);
-  color: #68d391;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-color: #10b981;
+  transform: translateY(-1px);
+}
+
+.file-preview-info {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #10b981;
+}
+
+.file-preview-info small {
+  color: #10b981;
+  font-weight: 500;
+  display: block;
 }
 
 /* Form Error */
