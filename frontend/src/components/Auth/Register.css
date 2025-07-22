@@ -326,6 +326,95 @@
   text-decoration: underline;
 }
 
+/* Success Message */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  color: #16a34a;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  font-size: 1.2rem;
+}
+
+/* Divider */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 2rem 0;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+  z-index: 0;
+}
+
+.divider span {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Google Button */
+.google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2rem;
+  background: #ffffff;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.google-btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
   .register-container {
@@ -345,137 +434,14 @@
     flex-direction: column;
     gap: 0.75rem;
   }
-}
-
-.register-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.register-title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.register-subtitle {
-  font-size: 1rem;
-  color: #000000;
-  margin-bottom: 30px;
-  opacity: 0.8;
-}
-
-.register-form {
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #333;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #74ebd5;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  background: #74ebd5;
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-  background: #5cd1b9;
-  transform: translateY(-2px);
-}
-
-.error-message {
-  color: #ff4444;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-}
-
-.login-link {
-  margin-top: 20px;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: #74ebd5;
-  cursor: pointer;
-  font-weight: 500;
-  padding: 0;
-  margin-left: 5px;
-}
-
-.link-btn:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 480px) {
-  .register-card {
-    padding: 30px;
-    max-width: 90%;
-  }
-
-  .register-title {
-    font-size: 2rem;
-  }
-
-  .register-subtitle {
+  
+  .modern-input {
     font-size: 0.9rem;
+    padding: 1.1rem 1.1rem 1.1rem 3.25rem;
   }
-
-  .form-group input {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
-  .submit-btn {
-    font-size: 1rem;
-    padding: 10px;
+  
+  .register-btn, .google-btn {
+    font-size: 0.95rem;
+    padding: 1.1rem 1.5rem;
   }
 } 
