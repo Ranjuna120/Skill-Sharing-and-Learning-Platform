@@ -442,6 +442,28 @@
   font-size: 0.875rem;
 }
 
+/* Post Video */
+.post-video-container {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.post-video {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  border-radius: 12px;
+  outline: none;
+}
+
+.post-video:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
 /* Edit Form */
 .edit-form {
   background: rgba(0, 0, 0, 0.2);
