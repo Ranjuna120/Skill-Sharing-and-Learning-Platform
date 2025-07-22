@@ -123,22 +123,23 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   min-height: 100vh;
   color: var(--gray-800);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Remove global background - let each page handle its own */
 }
 
 /* Main content container to prevent navbar overlap */
 .main-content {
   margin-top: var(--nav-height);
   min-height: calc(100vh - var(--nav-height));
+  /* Remove additional styling that conflicts with page-specific backgrounds */
 }
 
-/* Page containers */
-.page-container {
+/* Page containers - only for auth pages and specific use cases */
+.page-container-auth {
   min-height: calc(100vh - var(--nav-height));
   padding: 2rem;
   display: flex;
@@ -147,11 +148,12 @@ body {
   margin-top: var(--nav-height);
 }
 
-.content-container {
+/* Remove conflicting content-container that overrides page styles */
+.content-container-global {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  margin-top: var(--nav-height);
+  /* Remove margin-top since pages handle their own layout */
 }
 
 /* Fix for forms and cards */
