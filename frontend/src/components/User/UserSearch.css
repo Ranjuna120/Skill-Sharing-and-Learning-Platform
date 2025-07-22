@@ -1,103 +1,522 @@
+/* UserSearch.css - Modern Find User Styling */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Page Layout */
+.user-search-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  padding-top: calc(var(--nav-height, 80px) + 20px); /* Use CSS variable + extra spacing */
+}
+
+.user-search-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>') repeat;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.user-search-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 2; /* Higher than navigation to avoid conflicts */
+}
+
+/* Page Header */
+.user-search-page .page-header {
+  margin-bottom: 3rem;
+  border-bottom: none; /* Override global style */
+  padding-bottom: 0; /* Override global style */
+  display: flex; /* Ensure proper flex behavior */
+  justify-content: center; /* Center the header content */
+  align-items: center;
+  text-align: center; /* Center text alignment */
+}
+
+.user-search-page .header-content {
+  display: flex;
+  flex-direction: column; /* Stack title and subtitle vertically */
+  align-items: center; /* Center align content */
+  justify-content: center;
+  gap: 1rem;
+  width: 100%; /* Full width for proper centering */
+}
+
+.user-search-page .header-text {
+  flex: 1;
+  text-align: center; /* Center the text content */
+  width: 100%; /* Ensure full width */
+}
+
+.user-search-page .page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the title */
+  gap: 1rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: none; /* Override global gradient */
+  -webkit-text-fill-color: white; /* Override global transparent */
+  width: 100%; /* Full width for proper centering */
+  margin-top: -100px;
+}
+
+.title-icon {
+  font-size: 2.5rem;
+  animation: pulse 2s infinite;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.user-search-page .page-subtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+  text-align: center; /* Center the subtitle */
+  max-width: 600px; /* Limit width for better readability */
+  margin-left: 270px;
+}
+
 .user-search {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
-}
-
-.search-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.search-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.search-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.users-list {
+  padding: 0;
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center; /* Center all content within user-search */
 }
 
-.user-card {
+/* Search Form Styling */
+.form-modern {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  position: relative; /* For pseudo-element positioning */
+  width: 100%; /* Full width within container */
+  max-width: 600px; /* Limit maximum width */
+}
+
+.form-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4facfe, #00f2fe, #a8edea);
+  border-radius: 20px 20px 0 0;
+}
+
+.form-group-modern {
+  margin-bottom: 1.5rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.form-input-modern {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  font-size: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d3748;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-input-modern::placeholder {
+  color: #64748b;
+  opacity: 0.8;
+}
+
+.form-input-modern:focus {
+  border-color: #4facfe;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.1);
+  transform: translateY(-1px);
+}
+
+.input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Form Actions */
+.form-actions-modern {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-actions-modern.center {
+  justify-content: center;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn.loading {
+  pointer-events: none;
+}
+
+/* Loading Spinner */
+.spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+/* Search Results Container */
+.search-results {
+  margin-top: 2rem;
+  width: 100%; /* Full width for search results */
+}
+
+/* Card Styles */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-info {
+  background: rgba(79, 172, 254, 0.1);
+  border-color: rgba(79, 172, 254, 0.3);
+  max-width: 500px; /* Limit width for better centering */
+  margin: 0 auto; /* Center the info card */
+}
+
+/* Message styling for info cards */
+.card-info .card-content p {
+  color: white;
+}
+
+.card-info .card-content p:last-child {
+  color: #718096 !important;
+  font-size: 0.875rem !important;
+}
+
+/* Loading card styling */
+.loading-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  max-width: 500px; /* Limit width for better centering */
+  margin: 0 auto; /* Center the loading card */
+}
+
+.loading-text {
   display: flex;
   align-items: center;
-  padding: 15px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  gap: 0.5rem;
+  color: white;
+  margin-top: 1rem;
+}
+
+.card-error {
+  max-width: 400px;
+  width: 100%;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-content p {
+  margin: 0.5rem 0;
+  color: white;
+}
+
+.card-content h2 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Page Container for Error State */
+.user-search-page .page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* User Card Specific Styles */
+.user-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative; /* For pseudo-element */
+}
+
+.user-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 20px 20px 0 0;
+}
+
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
 }
 
 .user-avatar {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  margin-right: 15px;
+  object-fit: cover;
+  border: 3px solid #667eea;
+  flex-shrink: 0;
 }
 
-.user-info {
+.user-search-page .user-info {
   flex: 1;
+  margin-left: 1rem; /* Space between avatar and info */
 }
 
 .user-info h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #333;
+  margin: 0 0 0.5rem 0;
+  color: #2d3748;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .user-info p {
-  margin: 5px 0;
-  color: #666;
-  font-size: 14px;
+  margin: 0 0 0.5rem 0;
+  color: #718096; /* Better contrast for readability */
+  font-size: 0.9rem;
 }
 
 .user-stats {
   display: flex;
-  gap: 15px;
-  font-size: 14px;
-  color: #888;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #a0aec0; /* Match inline style colors */
+  margin-top: 0.5rem;
 }
 
-.follow-button {
-  padding: 8px 16px;
-  border: 1px solid #007bff;
+.user-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* User Card Button Styling */
+.user-card .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
   border-radius: 20px;
-  background-color: white;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  min-width: 100px;
+  flex-shrink: 0; /* Prevent button shrinking */
 }
 
-.follow-button.following {
-  background-color: #007bff;
+.user-card .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.user-card .btn-outline {
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #667eea;
+}
+
+.user-card .btn-outline:hover {
+  background: #667eea;
   color: white;
 }
 
-.follow-button:hover {
-  background-color: #f8f9fa;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-search-page {
+    padding-top: calc(var(--nav-height, 80px) + 10px); /* Reduced spacing on mobile */
+  }
+  
+  .user-search-page-container {
+    padding: 1rem; /* Reduced padding on mobile */
+  }
+  
+  .user-search-page .page-title {
+    font-size: 2rem; /* Smaller title on mobile */
+    flex-direction: column; /* Stack icon and text vertically on smaller screens */
+    gap: 0.5rem;
+  }
+  
+  .form-modern {
+    padding: 1.5rem;
+    max-width: 100%; /* Full width on mobile */
+  }
+  
+  .user-profile-section {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .user-search-page .user-info {
+    text-align: center;
+    width: 100%;
+    margin-left: 0; /* Reset margin on mobile */
+  }
+  
+  .user-stats {
+    justify-content: center;
+  }
+  
+  .user-card .btn {
+    align-self: center;
+    margin-top: 1rem;
+    width: 100%; /* Full width button on mobile */
+  }
 }
 
-.follow-button.following:hover {
-  background-color: #0056b3;
+@media (max-width: 480px) {
+  .user-search-page {
+    padding-top: calc(var(--nav-height, 80px) + 5px); /* Minimal spacing on small screens */
+  }
+  
+  .user-search-page .page-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-modern {
+    padding: 1rem;
+    max-width: 100%; /* Full width on small screens */
+  }
+  
+  .user-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+  }
 } 
