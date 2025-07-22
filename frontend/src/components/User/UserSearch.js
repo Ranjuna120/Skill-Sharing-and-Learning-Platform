@@ -91,17 +91,28 @@ const UserSearch = ({ currentUserId }) => {
         </form>
       </div>
 
+      {loading && (
+        <div className="card loading-card">
+          <div className="card-content text-center">
+            <div className="loading-text">
+              <div className="spinner-small"></div>
+              Searching users...
+            </div>
+          </div>
+        </div>
+      )}
+
       {users.length === 0 && searchQuery && !loading && (
         <div className="card card-info">
           <div className="card-content text-center">
             <p>🔍 No users found</p>
-            <p style={{color: '#718096', fontSize: '0.875rem'}}>Try a different search term</p>
+            <p>Try a different search term</p>
           </div>
         </div>
       )}
 
       {users.length > 0 && (
-        <div className="grid grid-cols-1 gap-4" style={{marginTop: '2rem'}}>
+        <div className="grid grid-cols-1 gap-4 search-results">
           {users.map(user => (
             <div key={user.id} className="card user-card">
               <div className="card-content">
@@ -110,17 +121,11 @@ const UserSearch = ({ currentUserId }) => {
                     src={user.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`}
                     alt={user.name}
                     className="user-avatar"
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      objectFit: 'cover'
-                    }}
                   />
-                  <div className="user-info" style={{flex: 1, marginLeft: '1rem'}}>
-                    <h3 style={{margin: '0 0 0.5rem 0', color: '#2d3748'}}>{user.name}</h3>
-                    <p style={{margin: '0 0 0.5rem 0', color: '#718096'}}>{user.email}</p>
-                    <div className="user-stats" style={{display: 'flex', gap: '1rem', fontSize: '0.875rem', color: '#a0aec0'}}>
+                  <div className="user-info">
+                    <h3>{user.name}</h3>
+                    <p>{user.email}</p>
+                    <div className="user-stats">
                       <span>👥 {user.followersCount || 0} followers</span>
                       <span>➡️ {user.followingCount || 0} following</span>
                     </div>
