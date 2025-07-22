@@ -12,12 +12,13 @@
   width: 100%;
 }
 
-/* Remove the old button styles since they're now handled by individual components */
-button {
-  cursor: pointer;
+.main-content {
+  flex: 1;
+  /* Remove padding and margin since each page handles its own layout */
+  width: 100%;
 }
 
-/* Add some global styles */
+/* Reset any conflicting global styles */
 * {
   margin: 0;
   padding: 0;
@@ -30,5 +31,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
+  /* Remove background color since each page has its own */
+  margin: 0;
+  padding: 0;
 }
