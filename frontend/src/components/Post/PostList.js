@@ -46,6 +46,8 @@ const PostList = () => {
       console.log('Current user:', user);
       console.log('Fetched posts:', response.data);
       console.log('Sample post structure:', response.data[0]); // Debug log
+      console.log('Sample favoritedBy:', response.data[0]?.favoritedBy); // Debug log
+      console.log('Posts with videos:', response.data.filter(post => post.video).length); // Debug log for videos
     } catch (error) {
       setError('Failed to fetch posts');
       console.error('Error fetching posts:', error);
@@ -484,6 +486,25 @@ const PostList = () => {
                           <div className="image-overlay">
                             <FaImage />
                           </div>
+                        </div>
+                      )}
+                      {post.video && (
+                        <div className="post-video-container">
+                          <video
+                            controls
+                            className="post-video"
+                            preload="metadata"
+                          >
+                            <source 
+                              src={`data:video/mp4;base64,${post.video}`}
+                              type="video/mp4"
+                            />
+                            <source 
+                              src={`data:video/webm;base64,${post.video}`}
+                              type="video/webm"
+                            />
+                            Your browser does not support the video tag.
+                          </video>
                         </div>
                       )}
                     </>
