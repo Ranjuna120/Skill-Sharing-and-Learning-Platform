@@ -95,9 +95,26 @@ const PostForm = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files) {
+      const file = files[0];
+      
+      // Validate file size (max 100MB for videos, 10MB for images)
+      if (file) {
+        const maxSize = name === 'video' ? 100 * 1024 * 1024 : 10 * 1024 * 1024; // 100MB for video, 10MB for images
+        if (file.size > maxSize) {
+          const maxSizeMB = name === 'video' ? 100 : 10;
+          setError(`File size too large. Maximum size is ${maxSizeMB}MB.`);
+          return;
+        }
+        
+        // Clear any previous error
+        if (error.includes('File size too large')) {
+          setError('');
+        }
+      }
+      
       setFormData(prev => ({
         ...prev,
-        [name]: files[0]
+        [name]: file
       }));
     } else {
       setFormData(prev => ({
@@ -220,12 +237,27 @@ const PostForm = () => {
                 id="video"
                 name="video"
                 onChange={handleChange}
-                accept="video/*"
+                accept="video/mp4,video/webm,video/avi,video/mov,video/wmv"
               />
               <div className={`file-input-label ${formData.video ? 'has-file' : ''}`}>
-                <span>{formData.video ? '✓ Video Selected' : '🎥 Choose Video'}</span>
+                <span>
+                  {formData.video ? (
+                    <>
+                      ✓ {formData.video.name} ({(formData.video.size / (1024 * 1024)).toFixed(1)}MB)
+                    </>
+                  ) : (
+                    '🎥 Choose Video (Max 100MB)'
+                  )}
+                </span>
               </div>
             </div>
+            {formData.video && (
+              <div className="file-preview-info">
+                <small>
+                  📋 {formData.video.type || 'Unknown format'} • {(formData.video.size / (1024 * 1024)).toFixed(1)}MB
+                </small>
+              </div>
+            )}
           </div>
 
           {error && (
