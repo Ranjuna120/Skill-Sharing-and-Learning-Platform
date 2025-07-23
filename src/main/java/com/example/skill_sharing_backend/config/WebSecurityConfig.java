@@ -32,6 +32,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/login", "/api/auth/register", "/api/auth/logout").permitAll()
                 .requestMatchers("/oauth2/**", "/login/oauth2/code/**").permitAll()
+                .requestMatchers("/api/demo/**").permitAll()
                 .anyRequest().authenticated())
             .oauth2Login(oauth -> oauth
                 .loginPage("/oauth2/authorization/google")
