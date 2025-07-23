@@ -15,6 +15,13 @@ A modern, full-stack web application built with **Spring Boot** and **React** th
 - 📤 **File Upload** - Support for multimedia content
 - 🔒 **Security** - JWT tokens, CORS configuration
 - 🗄️ **Database** - MySQL with JPA/Hibernate
+- 🛠️ **Java Utility Classes** - Comprehensive utility libraries
+  - **StringUtils** - Text processing, validation, formatting
+  - **DateUtils** - Date manipulation and formatting
+  - **MathUtils** - Mathematical calculations and operations
+  - **SecurityUtils** - Token generation and password hashing
+  - **CollectionUtils** - Array and list operations
+  - **ValidationUtils** - Email, URL, phone validation
 
 ### Frontend (React)
 - 🎨 **Modern UI/UX** - Glassmorphism design with gradients
@@ -26,6 +33,10 @@ A modern, full-stack web application built with **Spring Boot** and **React** th
 - 🔔 **Notifications** - Real-time updates
 - 👥 **Social Features** - User profiles and search
 - ⚡ **Performance** - Optimized loading and animations
+- 🛠️ **Utility Demo Page** - Interactive showcase of Java utilities
+  - **Live API Testing** - Real-time demonstration of backend utilities
+  - **Beautiful UI** - Modern card-based layout with animations
+  - **Comprehensive Coverage** - All utility classes demonstrated
 
 ## 🚀 Technology Stack
 
@@ -104,6 +115,44 @@ npm install
 npm start
 ```
 Frontend will start on: `http://localhost:3000`
+
+## 🛠️ Java Utility Classes
+
+The project includes a comprehensive set of utility classes that demonstrate modern Java development practices:
+
+### StringUtils
+- Text validation and formatting
+- Case conversions (camelCase, snake_case, kebab-case)
+- Email, URL, phone number validation
+- Text manipulation (truncate, reverse, normalize)
+
+### DateUtils
+- Date formatting and parsing
+- Date calculations and comparisons
+- Time zone handling
+- Human-readable date displays
+
+### MathUtils
+- Mathematical calculations
+- Statistical operations
+- Number validation and formatting
+
+### SecurityUtils
+- Secure token generation
+- Password hashing with salt
+- Random string generation
+- UUID creation
+
+### CollectionUtils
+- Collection operations and utilities
+- Safe collection handling
+- Data processing helpers
+
+### Demo Interface
+Access the interactive utility demo at: `http://localhost:3000/utils-demo`
+- **Live Testing** - Test all utilities with real-time results
+- **Beautiful UI** - Modern, responsive interface
+- **Complete Coverage** - Demonstrates all utility functions
 
 ## 🏃‍♂️ Running the Application
 
