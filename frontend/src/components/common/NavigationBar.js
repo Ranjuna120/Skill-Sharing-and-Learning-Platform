@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaPlus, FaBookReader, FaChartLine, FaUser, FaSearch, FaSignOutAlt, FaBell } from 'react-icons/fa';
+import { FaHome, FaPlus, FaBookReader, FaChartLine, FaUser, FaSearch, FaSignOutAlt, FaBell, FaTools } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import './NavigationBar.css';
 
@@ -80,6 +80,14 @@ const NavigationBar = () => {
         >
           <FaBell className="nav-icon" />
           <span>Notifications</span>
+        </Link>
+        <Link 
+          to="/utils-demo" 
+          className={`nav-link ${isActive('/utils-demo') ? 'active' : ''}`}
+          title="Utils Demo"
+        >
+          <FaTools className="nav-icon" />
+          <span>Utils Demo</span>
         </Link>
         <Link 
           to="/profile" 
