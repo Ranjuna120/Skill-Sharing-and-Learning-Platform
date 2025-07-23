@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Comment;
@@ -21,6 +22,11 @@ import com.example.model.User;
 import com.example.service.NotificationService;
 import com.example.service.PostService;
 import com.example.service.SocialInteractionService;
+import com.example.skill_sharing_backend.util.StringUtils;
+import com.example.skill_sharing_backend.util.ValidationUtils;
+import com.example.skill_sharing_backend.util.DateUtils;
+
+import java.time.LocalDateTime;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -102,8 +108,20 @@ public class PostController {
             @PathVariable Long postId,
             @Valid @RequestBody CommentRequest request,
             @AuthenticationPrincipal User user) {
+        
+        // Use StringUtils to clean and validate comment content
+        String cleanedContent = StringUtils.normalizeWhitespace(request.getContent());
+        
+        // Additional validation using ValidationUtils
+        ValidationUtils.ValidationResult lengthValidation = 
+            ValidationUtils.validateLength(cleanedContent, "comment", 1, 1000);
+        
+        if (!lengthValidation.isValid()) {
+            return ResponseEntity.badRequest().build();
+        }
+        
         Post post = postService.getPostById(postId);
-        return ResponseEntity.ok(socialService.addComment(user, post, request.getContent()));
+        return ResponseEntity.ok(socialService.addComment(user, post, cleanedContent));
     }
 
     @PutMapping("/comments/{commentId}")
@@ -124,6 +142,27 @@ public class PostController {
             @AuthenticationPrincipal User user) {
         socialService.deleteComment(commentId);
         return ResponseEntity.ok().build();
+    }
+
+    // NEW: Get posts created in the last N days using DateUtils
+    @GetMapping("/recent")
+    public ResponseEntity<String> getRecentPosts(
+            @RequestParam(defaultValue = "7") int days,
+            Pageable pageable) {
+        
+        // Use DateUtils to calculate date range
+        LocalDateTime now = DateUtils.getCurrentTimestamp();
+        LocalDateTime startDate = DateUtils.addDays(now, -days); // subtract days
+        
+        String message = String.format("Looking for posts since: %s (Current: %s)", 
+                DateUtils.formatDateTime(startDate), 
+                DateUtils.formatDateTime(now));
+        
+        // This would require a new method in PostService
+        // return ResponseEntity.ok(postService.getPostsSince(startDate, pageable));
+        
+        // For now, return a message showing the date calculation
+        return ResponseEntity.ok(message);
     }
 
     @Data
