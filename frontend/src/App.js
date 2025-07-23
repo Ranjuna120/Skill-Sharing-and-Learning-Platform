@@ -13,6 +13,7 @@ import Profile from './components/User/Profile';
 import NavigationBar from './components/common/NavigationBar';
 import UserSearchPage from './pages/UserSearchPage';
 import NotificationsPage from './components/Notifications/NotificationsPage';
+import UtilsDemo from './components/Utils/UtilsDemo';
 import './App.css';
 import './styles/GlobalTheme.css';
 import './styles/ModernButtons.css';
@@ -41,6 +42,7 @@ const AppContent = () => {
           <Route path="/create-progress" element={<ProgressForm />} />
           <Route path="/users" element={<UserSearchPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/utils-demo" element={<UtilsDemo />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Navigate to="/posts" replace />} />
